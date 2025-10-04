@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YT Man - Next Generation Video Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        body {
+            background-color: #0f0f0f;
+            color: #f1f1f1;
+        }
+        
+        .sidebar {
+            transition: all 0.3s ease;
+        }
+        
+        .video-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .video-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .ai-highlight {
+            background: linear-gradient(90deg, #ff6b6b, #ffa36c, #ffde7d, #a3de83, #6a98f0, #9d65c9);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .hologram-effect {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hologram-effect::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.1) 50%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            transform: rotate(30deg);
+            animation: hologram 3s infinite linear;
+        }
+        
+        @keyframes hologram {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(30deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(30deg); }
+        }
+        
+        .neon-text {
+            text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #ff00de, 0 0 20px #ff00de;
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 glass-effect">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <button id="menu-toggle" class="p-2 rounded-full hover:bg-gray-800">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="flex items-center">
+                    <i class="fab fa-youtube text-red-600 text-3xl mr-2"></i>
+                    <span class="text-xl font-bold">YT Man</span>
+                </div>
+            </div>
+            
+            <div class="flex-1 max-w-2xl mx-4">
+                <div class="relative">
+                    <input type="text" placeholder="Search with AI..." class="w-full py-2 px-4 rounded-full bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <button class="absolute right-0 top-0 h-full px-4 text-gray-400 hover:text-white">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <button class="p-2 rounded-full hover:bg-gray-800 relative">
+                    <i class="fas fa-video"></i>
+                    <span class="absolute -top-1 -right-1 bg-red-500 text-xs rounded-full h-5 w-5 flex items-center justify-center pulse">AI</span>
+                </button>
+                <button class="p-2 rounded-full hover:bg-gray-800">
+                    <i class="fas fa-bell"></i>
+                </button>
+                <div class="w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 flex items-center justify-center">
+                    <span class="font-bold">U</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sidebar w-64 h-screen overflow-y-auto bg-gray-900">
+            <nav class="p-4">
+                <ul class="space-y-2">
+                    <li>
+                        <a href="#" class="flex items-center space-x-4 p-2 rounded-lg bg-gray-800">
+                            <i class="fas fa-home"></i>
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center space-x-4 p-2 rounded-lg hover:bg-gray-800">
+                            <i class="fas fa-compass"></i>
+                            <span>Explore</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center space-x-4 p-2 rounded-lg hover:bg-gray-800">
+                            <i class="fas fa-play-circle"></i>
+                            <span>Subscriptions</span>
+                        </a>
+                    </li>
+                </ul>
+                
+                <div class="my-6 border-t border-gray-700 pt-4">
+                    <h3 class="px-2 text-sm font-semibold text-gray-400">LIBRARY</h3>
+                    <ul class="mt-2 space-y-2">
+                        <li>
+                            <a href="#" class="flex items-center space-x-4 p-2 rounded-lg hover:bg-gray-800">
+                                <i class="fas fa-history"></i>
+                                <span>History</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="flex items-center space-x-4 p-2 rounded-lg hover:bg-gray-800">
+                                <i class="fas fa-clock"></i>
+                                <span>Watch Later</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="flex items-center space-x-4 p-2 rounded-lg hover:bg-gray-800">
+                                <i class="fas fa-thumbs-up"></i>
+                                <span>Liked Videos</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="my-6 border-t border-gray-700 pt-4">
+                    <h3 class="px-2 text-sm font-semibold text-gray-400">AI TOOLS</h3>
+                    <ul class="mt-2 space-y-2">
+                        <li>
+                            <a href="#" class="flex items-center space-x-4 p-2 rounded-lg hover:bg-gray-800">
+                                <i class="fas fa-robot"></i>
+                                <span>AI Summarizer</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="flex items-center space-x-4 p-2 rounded-lg hover:bg-gray-800">
+                                <i class="fas fa-language"></i>
+                                <span>Real-time Translation</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="flex items-center space-x-4 p-2 rounded-lg hover:bg-gray-800">
+                                <i class="fas fa-vr-cardboard"></i>
+                                <span>Immersive Mode</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-6">
+            <!-- Hero Section -->
+            <section class="mb-8 rounded-xl overflow-hidden gradient-bg">
+                <div class="p-8 flex flex-col md:flex-row items-center">
+                    <div class="md:w-1/2 mb-6 md:mb-0">
+                        <h1 class="text-4xl font-bold mb-4">Welcome to YT Man</h1>
+                        <p class="text-gray-300 mb-6">Experience the future of video with AI-powered recommendations, immersive viewing, and interactive features.</p>
+                        <div class="flex space-x-4">
+                            <button class="px-6 py-3 bg-red-600 rounded-full font-semibold hover:bg-red-700 transition">
+                                <i class="fas fa-play mr-2"></i> Start Watching
+                            </button>
+                            <button class="px-6 py-3 glass-effect rounded-full font-semibold hover:bg-gray-800 transition">
+                                <i class="fas fa-robot mr-2"></i> Try AI Features
+                            </button>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 flex justify-center">
+                        <div class="relative">
+                            <div class="w-64 h-40 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg shadow-lg transform rotate-3"></div>
+                            <div class="w-64 h-40 bg-gradient-to-r from-blue-500 to-teal-400 rounded-lg shadow-lg absolute top-4 left-4 transform -rotate-3"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- AI Recommendations Section -->
+            <section class="mb-8">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-2xl font-bold">AI-Powered Recommendations</h2>
+                    <button class="text-blue-400 hover:text-blue-300 flex items-center">
+                        <span>View All</span>
+                        <i class="fas fa-chevron-right ml-1"></i>
+                    </button>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    <!-- Video Card 1 -->
+                    <div class="video-card rounded-lg overflow-hidden bg-gray-800 hover:bg-gray-700 cursor-pointer">
+                        <div class="relative">
+                            <img src="https://picsum.photos/320/180?random=1" alt="Video thumbnail" class="w-full h-40 object-cover">
+                            <span class="absolute bottom-2 right-2 bg-black bg-opacity-70 text-xs px-1 rounded">12:34</span>
+                            <div class="absolute top-2 right-2 w-3 h-3 rounded-full bg-red-500 pulse"></div>
+                        </div>
+                        <div class="p-3">
+                            <h3 class="font-semibold mb-1">The Future of AI in Content Creation</h3>
+                            <p class="text-sm text-gray-400 mb-2">TechVision • 2.4M views • 3 days ago</p>
+                            <div class="flex items-center text-xs text-gray-400">
+                                <span class="ai-highlight px-2 py-1 rounded">AI Recommended</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Video Card 2 -->
+                    <div class="video-card rounded-lg overflow-hidden bg-gray-800 hover:bg-gray-700 cursor-pointer">
+                        <div class="relative">
+                            <img src="https://picsum.photos/320/180?random=2" alt="Video thumbnail" class="w-full h-40 object-cover">
+                            <span class="absolute bottom-2 right-2 bg-black bg-opacity-70 text-xs px-1 rounded">24:15</span>
+                        </div>
+                        <div class="p-3">
+                            <h3 class="font-semibold mb-1">Quantum Computing Explained</h3>
+                            <p class="text-sm text-gray-400 mb-2">Science Today • 5.7M views • 1 week ago</p>
+                            <div class="flex items-center text-xs text-gray-400">
+                                <span class="ai-highlight px-2 py-1 rounded">Trending in Tech</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Video Card 3 -->
+                    <div class="video-card rounded-lg overflow-hidden bg-gray-800 hover:bg-gray-700 cursor-pointer">
+                        <div class="relative">
+                            <img src="https://picsum.photos/320/180?random=3" alt="Video thumbnail" class="w-full h-40 object-cover">
+                            <span class="absolute bottom-2 right-2 bg-black bg-opacity-70 text-xs px-1 rounded">18:42</span>
+                        </div>
+                        <div class="p-3">
+                            <h3 class="font-semibold mb-1">Building the Metaverse: A 2026 Perspective</h3>
+                            <p class="text-sm text-gray-400 mb-2">Future Labs • 3.2M views • 2 days ago</p>
+                            <div class="flex items-center text-xs text-gray-400">
+                                <span class="bg-green-500 text-black px-2 py-1 rounded">Live</span>
+                                <span class="ml-2 ai-highlight px-2 py-1 rounded">AI Picked</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Video Card 4 -->
+                    <div class="video-card rounded-lg overflow-hidden bg-gray-800 hover:bg-gray-700 cursor-pointer">
+                        <div class="relative">
+                            <img src="https://picsum.photos/320/180?random=4" alt="Video thumbnail" class="w-full h-40 object-cover">
+                            <span class="absolute bottom-2 right-2 bg-black bg-opacity-70 text-xs px-1 rounded">32:08</span>
+                        </div>
+                        <div class="p-3">
+                            <h3 class="font-semibold mb-1">Neural Interfaces: The Next Computing Revolution</h3>
+                            <p class="text-sm text-gray-400 mb-2">NeuroTech • 1.8M views • 5 days ago</p>
+                            <div class="flex items-center text-xs text-gray-400">
+                                <span class="ai-highlight px-2 py-1 rounded">Based on your interests</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Interactive Features Section -->
+            <section class="mb-8">
+                <h2 class="text-2xl font-bold mb-4">Interactive Features</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- AI Summarizer -->
+                    <div class="glass-effect rounded-xl p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 flex items-center justify-center mr-4">
+                                <i class="fas fa-robot text-white"></i>
+                            </div>
+                            <h3 class="text-xl font-bold">AI Video Summarizer</h3>
+                        </div>
+                        <p class="text-gray-300 mb-4">Get instant summaries of long videos. Save time by watching only the key moments.</p>
+                        <button class="px-4 py-2 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full text-sm font-medium">
+                            Try It Now
+                        </button>
+                    </div>
+                    
+                    <!-- Real-time Translation -->
+                    <div class="glass-effect rounded-xl p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-full bg-gradient-to-r from-green-400 to-blue-500 flex items-center justify-center mr-4">
+                                <i class="fas fa-language text-white"></i>
+                            </div>
+                            <h3 class="text-xl font-bold">Real-time Translation</h3>
+                        </div>
+                        <p class="text-gray-300 mb-4">Watch videos in any language with real-time subtitles and audio translation.</p>
+                        <button class="px-4 py-2 bg-gradient-to-r from-green-400 to-blue-500 rounded-full text-sm font-medium">
+                            Enable Translation
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Trending Now Section -->
+            <section class="mb-8">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-2xl font-bold">Trending Now</h2>
+                    <div class="flex space-x-2">
+                        <button class="px-3 py-1 rounded-full glass-effect text-sm">All</button>
+                        <button class="px-3 py-1 rounded-full glass-effect text-sm">Music</button>
+                        <button class="px-3 py-1 rounded-full glass-effect text-sm">Gaming</button>
+                        <button class="px-3 py-1 rounded-full glass-effect text-sm">Tech</button>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Trending Video 1 -->
+                    <div class="video-card rounded-lg overflow-hidden bg-gray-800 hover:bg-gray-700 cursor-pointer">
+                        <div class="relative">
+                            <img src="https://picsum.photos/320/180?random=5" alt="Video thumbnail" class="w-full h-40 object-cover">
+                            <span class="absolute bottom-2 right-2 bg-black bg-opacity-70 text-xs px-1 rounded">15:22</span>
+                            <div class="absolute top-0 left-0 bg-red-600 text-xs font-bold px-2 py-1 rounded-br">LIVE</div>
+                        </div>
+                        <div class="p-3">
+                            <h3 class="font-semibold mb-1">Mars Colony Simulation: Day 45</h3>
+                            <p class="text-sm text-gray-400 mb-2">Space Explorers • 8.3M views • 2 hours ago</p>
+                            <div class="flex items-center text-xs text-gray-400">
+                                <span class="bg-red-600 text-white px-2 py-1 rounded">Live Now</span>
+                                <span class="ml-2">12.4K watching</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Trending Video 2 -->
+                    <div class="video-card rounded-lg overflow-hidden bg-gray-800 hover:bg-gray-700 cursor-pointer">
+                        <div class="relative">
+                            <img src="https://picsum.photos/320/180?random=6" alt="Video thumbnail" class="w-full h-40 object-cover">
+                            <span class="absolute bottom-2 right-2 bg-black bg-opacity-70 text-xs px-1 rounded">28:07</span>
+                        </div>
+                        <div class="p-3">
+                            <h3 class="font-semibold mb-1">Holographic Concerts: The Future of Live Music</h3>
+                            <p class="text-sm text-gray-400 mb-2">Music Futurist • 4.6M views • 1 day ago</p>
+                            <div class="flex items-center text-xs text-gray-400">
+                                <span class="ai-highlight px-2 py-1 rounded">Breaking</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Trending Video 3 -->
+                    <div class="video-card rounded-lg overflow-hidden bg-gray-800 hover:bg-gray-700 cursor-pointer hologram-effect">
+                        <div class="relative">
+                            <img src="https://picsum.photos/320/180?random=7" alt="Video thumbnail" class="w-full h-40 object-cover">
+                            <span class="absolute bottom-2 right-2 bg-black bg-opacity-70 text-xs px-1 rounded">41:33</span>
+                        </div>
+                        <div class="p-3">
+                            <h3 class="font-semibold mb-1">Creating Digital Humans with AI</h3>
+                            <p class="text-sm text-gray-400 mb-2">AI Creators • 6.1M views • 3 days ago</p>
+                            <div class="flex items-center text-xs text-gray-400">
+                                <span class="bg-purple-600 text-white px-2 py-1 rounded">VR Ready</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Toggle sidebar on mobile
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('hidden');
+            sidebar.classList.toggle('absolute');
+            sidebar.classList.toggle('z-40');
+        });
+
+        // Simulate AI recommendation highlights
+        const highlights = document.querySelectorAll('.ai-highlight');
+        highlights.forEach(highlight => {
+            highlight.addEventListener('mouseover', function() {
+                this.classList.add('pulse');
+            });
+            
+            highlight.addEventListener('mouseout', function() {
+                this.classList.remove('pulse');
+            });
+        });
+
+        // Simulate video card interactions
+        const videoCards = document.querySelectorAll('.video-card');
+        videoCards.forEach(card => {
+            card.addEventListener('click', function() {
+                alert('Video player would open here with futuristic features like:\n\n- AI-generated chapter markers\n- Interactive elements within the video\n- Real-time audience sentiment analysis\n- Personalized ad experience');
+            });
+        });
+    </script>
+</body>
+</html>
